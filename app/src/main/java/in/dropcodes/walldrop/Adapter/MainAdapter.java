@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import in.dropcodes.walldrop.Model.MainModel;
 import in.dropcodes.walldrop.R;
 
@@ -50,7 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mUser.setText(model.getUser());
 
         Picasso.get().load(model.getPreviewURL()).placeholder(R.drawable.ic_launcher_foreground).fit().centerInside().into(holder.mImage);
-
+        Picasso.get().load(model.getUserImageURL()).placeholder(R.drawable.ic_launcher_foreground).fit().centerInside().into(holder.mUserImage);
     }
 
     @Override
@@ -62,12 +63,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
         public ImageView mImage;
         public TextView mUser;
+        public CircleImageView mUserImage;
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mImage = itemView.findViewById(R.id.image_view);
             mUser = itemView.findViewById(R.id.user_name);
+            mUserImage = itemView.findViewById(R.id.auther_img);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
