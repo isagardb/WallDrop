@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import in.dropcodes.walldrop.Adapter.MainAdapter;
 import in.dropcodes.walldrop.Model.MainModel;
 
-public class MainActivity extends AppCompatActivity implements MainAdapter.OnItemClick {
+public class MainActivity extends AppCompatActivity  {
 
     private RecyclerView mRecyclerView;
     private MainAdapter adapter;
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
                             adapter = new MainAdapter(MainActivity.this,mainModels);
                             mRecyclerView.setAdapter(adapter);
-                            adapter.setOnItemClickListner(MainActivity.this);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -89,9 +88,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         requestQueue.add(request);
     }
 
-    @Override
-    public void onItemClick(int position) {
-        Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+      /*  Intent intent = new Intent(MainActivity.this,DetailActivity.class);
         MainModel m = mainModels.get(position);
         intent.putExtra("previewURL",m.getPreviewURL());
         intent.putExtra("userImageURL",m.getUserImageURL());
@@ -99,6 +96,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         intent.putExtra("largeImageURL",m.getLargeImageURL());
         intent.putExtra("imageWidth",m.getImageWidth());
         intent.putExtra("imageHeight",m.getImageHeight());
-        startActivity(intent);
+        startActivity(intent);  */
     }
-}
+

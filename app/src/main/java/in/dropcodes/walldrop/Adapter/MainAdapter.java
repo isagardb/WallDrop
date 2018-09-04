@@ -1,7 +1,9 @@
 package in.dropcodes.walldrop.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import in.dropcodes.walldrop.DetailActivity;
 import in.dropcodes.walldrop.Model.MainModel;
 import in.dropcodes.walldrop.R;
 
@@ -22,15 +25,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     private Context mContext;
     private ArrayList<MainModel> mainModels;
-    private OnItemClick mListner;
-
-    public interface OnItemClick{
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListner(OnItemClick listner){
-        mListner = listner;
-    }
 
     public MainAdapter(Context mContext, ArrayList<MainModel> mainModels) {
         this.mContext = mContext;
@@ -47,11 +41,32 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
 
-        MainModel model = mainModels.get(position);
+        final MainModel model = mainModels.get(position);
         holder.mUser.setText(model.getUser());
 
         Picasso.get().load(model.getPreviewURL()).placeholder(R.drawable.ic_launcher_foreground).fit().centerInside().into(holder.mImage);
         Picasso.get().load(model.getUserImageURL()).placeholder(R.drawable.ic_launcher_foreground).fit().centerInside().into(holder.mUserImage);
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(mContext,DetailActivity.class);
+                        intent.putExtra("previewURL",model.getPreviewURL());
+                        intent.putExtra("userImageURL",model.getUserImageURL());
+                        intent.putExtra("user",model.getUser());
+                        intent.putExtra("largeImageURL",model.getLargeImageURL());
+                        intent.putExtra("imageWidth",model.getImageWidth());
+                        intent.putExtra("imageHeight",model.getImageHeight());
+                        mContext.startActivity(intent);
+                    }
+                });thread.start();
+
+            }
+        });
     }
 
     @Override
@@ -64,6 +79,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         public ImageView mImage;
         public TextView mUser;
         public CircleImageView mUserImage;
+        public CardView mCardView;
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,18 +87,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             mImage = itemView.findViewById(R.id.image_view);
             mUser = itemView.findViewById(R.id.user_name);
             mUserImage = itemView.findViewById(R.id.auther_img);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListner != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            mListner.onItemClick(position);
-                        }
-                    }
-                }
-            });
+            mCardView = itemView.findViewById(R.id.card_view);
 
         }
     }
