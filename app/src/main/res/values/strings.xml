@@ -10,4 +10,28 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+
+    <string-array name="category">
+        <item> fashion</item>
+        <item> nature</item>
+        <item> backgrounds</item>
+        <item> science</item>
+        <item> education</item>
+        <item> people</item>
+        <item> feelings</item>
+        <item> religion</item>
+        <item> health</item>
+        <item> places</item>
+        <item> animals</item>
+        <item> industry</item>
+        <item> food</item>
+        <item> computer</item>
+        <item> sports</item>
+        <item> transportation</item>
+        <item> travel</item>
+        <item> buildings</item>
+        <item> business</item>
+        <item> music</item>
+    </string-array>
 </resources>

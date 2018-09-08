@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -21,12 +20,12 @@ import in.dropcodes.walldrop.DetailActivity;
 import in.dropcodes.walldrop.Model.MainModel;
 import in.dropcodes.walldrop.R;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
+public class LatestFragmentAdapter extends RecyclerView.Adapter<LatestFragmentAdapter.MainViewHolder> {
 
     private Context mContext;
     private ArrayList<MainModel> mainModels;
 
-    public MainAdapter(Context mContext, ArrayList<MainModel> mainModels) {
+    public LatestFragmentAdapter(Context mContext, ArrayList<MainModel> mainModels) {
         this.mContext = mContext;
         this.mainModels = mainModels;
     }
@@ -42,10 +41,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
 
         final MainModel model = mainModels.get(position);
-        holder.mUser.setText(model.getUser());
 
-        Picasso.get().load(model.getPreviewURL()).placeholder(R.drawable.ic_launcher_foreground).fit().centerInside().into(holder.mImage);
-        Picasso.get().load(model.getUserImageURL()).placeholder(R.drawable.ic_launcher_foreground).fit().centerInside().into(holder.mUserImage);
+        String imageSize = (Integer.toString(model.getImageWidth()))+"W" +" X "+ (Integer.toString(model.getImageHeight()) + "H");
+        holder.mUser.setText(imageSize);
+
+        Picasso.get().load(model.getLargeImageURL()).placeholder(R.drawable.ic_launcher_foreground).resize(180,180).centerCrop().into(holder.mImage);
+        Picasso.get().load(model.getUserImageURL()).placeholder(R.drawable.ic_launcher_foreground).resize(100,100).centerCrop().into(holder.mUserImage);
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +86,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             super(itemView);
 
             mImage = itemView.findViewById(R.id.image_view);
-            mUser = itemView.findViewById(R.id.user_name);
+            mUser = itemView.findViewById(R.id.size_name);
             mUserImage = itemView.findViewById(R.id.auther_img);
             mCardView = itemView.findViewById(R.id.card_view);
 
